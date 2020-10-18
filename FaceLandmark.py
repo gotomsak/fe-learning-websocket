@@ -38,7 +38,8 @@ class FaceLandmark(HumanConditionDetection.HumanConditionDetection):
         self.max_x_diff = 0
         self.max_y_diff = 0
         self.COUNTER = 0
-        self.TOTAL = 0
+        self.blink_total = 0
+        self.face_move_total = 0
         # すべてのフレームのカウント
         self.all_frame_cnt = 0
 
@@ -152,7 +153,7 @@ class FaceLandmark(HumanConditionDetection.HumanConditionDetection):
         else:
             # 　目を開けた時、カウンターが一定値以上だったら
             if self.COUNTER >= self.EYE_AR_CONSEC_FRAMES:
-                self.TOTAL += 1
+                self.blink_total += 1
 
             self.COUNTER = 0
 
@@ -240,8 +241,11 @@ class FaceLandmark(HumanConditionDetection.HumanConditionDetection):
         pitch_diff = 0
         yaw_diff = 0
         roll_diff = 0
-        res = {}
+        # res = {}
+        c1 = 0
         c2 = 0
+        c3 = 0
+
         w = 1
         for face in faces:
             res_x, res_y, yaw_diff, pitch_diff, roll_diff = self.get_face_move(
@@ -249,9 +253,18 @@ class FaceLandmark(HumanConditionDetection.HumanConditionDetection):
             # c1 = self.get_concentration(pitch_diff+yaw_diff+roll_diff,self.t)
         if (len(faces) != 0):
             c2 = self.get_concentration(res_x + res_y, 100, 2)
+            self.face_move_total += res_x + res_y
             w = self.get_weight(yaw_diff, pitch_diff, roll_diff)
+        res = {
+            "blink": self.blink_total,
+            "face_move": self.face_move_total,
+            "w": w,
+            "c1": c1,
+            "c2": c2,
+            "c3": c3,
+        }
         print("c2: ", c2)
         print("w: ", w)
-        print("blink_count", self.TOTAL)
+        print("blink_count", self.blink_total)
 
         return res
