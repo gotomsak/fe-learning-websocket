@@ -4,14 +4,11 @@ from imutils import face_utils
 import imutils
 import dlib
 import cv2
-from scipy.spatial import distance
-import json
-import pathlib
+
 # from . import eye_open_check
 import math
 from keras.models import model_from_json
 from sklearn import preprocessing
-import io
 # from PIL import Image
 import base64
 
@@ -20,15 +17,15 @@ class HumanConditionDetection():
 
     def __init__(self):
         self.face_cascade = cv2.CascadeClassifier(
-            '../classification_tool/Facial-Expression-Keras-master/haarcascade_frontalface_default.xml')
+            './classification_tool/Facial-Expression-Keras-master/haarcascade_frontalface_default.xml')
         self.model = model_from_json(open(
-            "../classification_tool/Facial-Expression-Keras-master/model/model.json", "r").read())
+            "./classification_tool/Facial-Expression-Keras-master/model/model.json", "r").read())
         self.model.load_weights(
-            '../classification_tool/Facial-Expression-Keras-master/model/model.h5')
+            './classification_tool/Facial-Expression-Keras-master/model/model.h5')
         self.emotions = ('Angry', 'Disgust', 'Fear', 'Happy',
                          'Neutral', 'Sad', 'Surprise')
         self.predictor = dlib.shape_predictor(
-            '../classification_tool/shape_predictor_68_face_landmarks.dat')
+            './classification_tool/shape_predictor_68_face_landmarks.dat')
         self.detector = dlib.get_frontal_face_detector()
     # 人体検出
 

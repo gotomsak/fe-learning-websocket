@@ -2,15 +2,15 @@ import HumanConditionDetection
 from imutils.video import VideoStream
 import numpy as np
 from imutils import face_utils
-import imutils
+
 import dlib
 import cv2
 from scipy.spatial import distance
 import json
-import pathlib
+
 # from . import eye_open_check
-import math
-from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
+
+
 import base64
 import datetime
 import os
@@ -235,7 +235,7 @@ class FaceLandmark(HumanConditionDetection.HumanConditionDetection):
 
     def save_image(self, frame):
         dt_now = datetime.datetime.now()
-        cv2.imwrite(self.save_dir_path+"/"+str(dt_now)+".jpg", frame)
+        cv2.imwrite(self.save_dir_path + "/" + str(dt_now) + ".jpg", frame)
 
     def getFinalDirPath(self):
         root_dir_path = "./data/images/"
@@ -249,7 +249,6 @@ class FaceLandmark(HumanConditionDetection.HumanConditionDetection):
         os.mkdir(final_dir)
         self.save_dir_path = final_dir
 
-
     def main_face_landmark(self, base64_data, max_blink_freq, min_blink_freq, max_face_move_freq, min_face_move_freq):
         if(self.all_frame_cnt == 0):
             self.getFinalDirPath()
@@ -260,7 +259,6 @@ class FaceLandmark(HumanConditionDetection.HumanConditionDetection):
         img_numpy = np.fromstring(b, np.uint8)
         frame = cv2.imdecode(img_numpy, cv2.COLOR_BGR2GRAY)
         self.save_image(frame)
-
 
         # ランドマーク抽出
         rects = self.detector(frame, 0)
