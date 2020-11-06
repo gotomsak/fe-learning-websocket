@@ -3,3 +3,4 @@ test.py
 image/
 .env
 data/
+venv

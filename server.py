@@ -1,18 +1,14 @@
 import asyncio
 import websockets
 import io
-from PIL import Image
 from HumanConditionDetection import HumanConditionDetection
 from FaceLandmark import FaceLandmark
 import json
-import mariadb
 import sys
-from dotenv import load_dotenv
 import os
 import ssl
 # from GetFrequency import GetFrequency
 # hcd = HumanConditionDetection()
-load_dotenv()
 
 
 async def server(websocket, path):
