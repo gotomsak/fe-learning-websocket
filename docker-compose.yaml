@@ -4,8 +4,7 @@ services:
     build: .
     tty: true
     volumes:
-      - .:/usr/src/app
+      - .:/app
       - ../data:/data
     ports:
       - 8765:8765
-    
