@@ -1,7 +1,6 @@
 import asyncio
 import websockets
 import io
-from HumanConditionDetection import HumanConditionDetection
 from FaceLandmark import FaceLandmark
 import json
 import sys
