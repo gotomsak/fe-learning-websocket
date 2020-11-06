@@ -1,4 +1,4 @@
-import HumanConditionDetection
+
 from imutils.video import VideoStream
 import numpy as np
 from imutils import face_utils
@@ -16,9 +16,14 @@ import datetime
 import os
 
 
-class FaceLandmark(HumanConditionDetection.HumanConditionDetection):
+class FaceLandmark:
     def __init__(self, right_t_provisional, left_t_provisional):
-        super().__init__()
+        # super().__init__()
+        # def __init__(self):
+        self.predictor = dlib.shape_predictor(
+            './classification_tool/shape_predictor_68_face_landmarks.dat')
+        self.detector = dlib.get_frontal_face_detector()
+
         # 顔のパーツの位置をxyz軸で固定, 回転行列へ
         self.model_points = np.array([
             (0.0, 0.0, 0.0),  # 30
