@@ -21,9 +21,13 @@ RUN apt-get update \
     && apt-get clean \
     && apt-get autoclean \
     && apt-get autoremove \
+    && apt-get install -y libdlib-dev \
+    && apt-get install -y libgl1-mesa-dev \
+    && apt-get install -y cmake cmake-curses-gui cmake-gui wget p7zip-full \
+    && apt-get install -y build-essential gcc g++ make \
     && pip install --no-cache-dir -r requirements.txt \
     && rm -rf /tmp/* /var/tmp/* \
     && rm -rf /var/lib/apt/lists/* \
     rm -rf /var/lib/apt/lists/*
 
-CMD [ "python", "./server.py" ]
+CMD [ "python", "./server.py" ]  

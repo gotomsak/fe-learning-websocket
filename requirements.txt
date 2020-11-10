@@ -20,7 +20,6 @@ itsdangerous==0.24
 Jinja2==2.10
 joblib==0.17.0
 Markdown==3.3.3
-MarkupSafe==1.0
 numpy==1.18.5
 oauthlib==3.1.0
 opencv-python==4.4.0.46
@@ -42,3 +41,4 @@ websockets==8.1
 Werkzeug==0.14.1
 wrapt==1.12.1
 zipp==3.4.0
+dlib
