@@ -28,10 +28,10 @@ async def server(websocket, path):
         res = json.dumps(res)
         await websocket.send(res)
 
-#ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-#ssl_context.load_cert_chain('./fullchain.pem', './privkey')
+ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+ssl_context.load_cert_chain('./ssl/fullchain.pem', './ssl/privkey.pem')
 #start_server = websockets.serve(server, "gotomsak", 8765, ssl=ssl_context)
-start_server = websockets.serve(server, "127.0.0.1", 8765)
+start_server = websockets.serve(server, "127.0.0.1", 8765, ssl=ssl_context)
 print("start")
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()

@@ -4,3 +4,4 @@ image/
 .env
 data/
 venv
+ssl/
