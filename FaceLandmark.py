@@ -243,7 +243,7 @@ class FaceLandmark:
         cv2.imwrite(self.save_dir_path + "/" + str(dt_now) + ".jpg", frame)
 
     def getFinalDirPath(self):
-        root_dir_path = "./data/images/"
+        root_dir_path = "../data/images/gc/"
         dir_list = os.listdir(root_dir_path)
         dir_list = [int(i) for i in dir_list]
         final_dir = 0
