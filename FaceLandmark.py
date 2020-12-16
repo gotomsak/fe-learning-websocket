@@ -84,6 +84,7 @@ class FaceLandmark:
         self.section_5_face_move_list = []
 
         self.save_dir_path = ""
+        self.full_save_file_path = ""
 
     # ロドリゲスポイント抽出
     def rodrigues_point(self, frame, shape):
@@ -241,6 +242,8 @@ class FaceLandmark:
     def save_image(self, frame):
         dt_now = datetime.datetime.now()
         cv2.imwrite(self.save_dir_path + "/" + str(dt_now) + ".jpg", frame)
+        self.full_save_file_path = self.save_dir_path + \
+            "/" + str(dt_now) + ".jpg"
 
     def getFinalDirPath(self):
         root_dir_path = "../data/images/gc/"
@@ -340,7 +343,7 @@ class FaceLandmark:
             c3 = self.get_concentration_synthesis(c1, c2, w)
 
         res = {
-            "face_image_path": self.save_dir_path,
+            "face_image_path": self.full_save_file_path,
             "blink": blink_sum,
             "face_move": face_move_sum,
             "angle": [yaw_sum, pitch_sum, roll_sum],
