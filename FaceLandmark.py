@@ -85,6 +85,10 @@ class FaceLandmark:
 
         self.save_dir_path = ""
         self.full_save_file_path = ""
+        self.max_blink_freq = 0
+        self.min_blink_freq = 0
+        self.max_face_move_freq = 0
+        self.min_face_move_freq = 0
 
     # ロドリゲスポイント抽出
     def rodrigues_point(self, frame, shape):
@@ -110,7 +114,10 @@ class FaceLandmark:
         return cnt
 
     def get_concentration(self, move_num, max_frequency, min_frequency):
-        return round((move_num - max_frequency) / (min_frequency - max_frequency), 2)
+        try:
+            return round((move_num - max_frequency) / (min_frequency - max_frequency), 2)
+        except:
+            return 0
 
     def get_weight(self, yaw, pitch, roll):
         return 1 - (((yaw / self.angle_threshold_yaw * 10) + (pitch / self.angle_threshold_pitch * 10) + (roll / self.angle_threshold_roll * 10)) / 3)
@@ -256,6 +263,17 @@ class FaceLandmark:
         final_dir = root_dir_path + str(int(final_dir) + 1)
         os.mkdir(final_dir)
         self.save_dir_path = final_dir
+    # 最大最低頻度を更新する関数
+
+    def update_freq(self, blink, face_move):
+        if self.max_blink_freq < blink:
+            self.max_blink_freq = blink
+        if self.min_blink_freq > blink or self.min_blink_freq == 0:
+            self.min_blink_freq = blink
+        if self.max_face_move_freq < face_move:
+            self.max_face_move_freq = face_move
+        if self.min_face_move_freq > face_move or self.min_face_move_freq == 0:
+            self.min_face_move_freq = face_move
 
     def main_face_landmark(self, base64_data, max_blink_freq, min_blink_freq, max_face_move_freq, min_face_move_freq):
         if(self.all_frame_cnt == 0):
@@ -320,14 +338,17 @@ class FaceLandmark:
             self.section_5_face_move_list.pop(0)
             self.section_5_angle_list.pop(0)
 
+        self.all_frame_cnt += 1
+
         if (self.all_frame_cnt >= 10):
             blink_sum = self.blink_true_count()
-            face_move_sum = 0
-            yaw_sum = 0
-            pitch_sum = 0
-            roll_sum = 0
+            # face_move_sum = 0
+            # yaw_sum = 0
+            # pitch_sum = 0
+            # roll_sum = 0
             for i in self.section_5_face_move_list:
                 face_move_sum += i
+            self.update_freq(blink_sum, face_move_sum)
             for i in self.section_5_angle_list:
                 yaw_sum += i[0]
                 pitch_sum += i[1]
