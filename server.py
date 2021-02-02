@@ -21,9 +21,11 @@ async def server(websocket, path):
         print(type(name))
 
         if "base64" not in name:
+            fl.save_dir_path = name
+            fl.create_dir()
             continue
 
-        res = fl.main_face_landmark(name, 1.2, 0.5, 1.2, 0.5)
+        res = fl.main_face_landmark(name)
 
         res = json.dumps(res)
         await websocket.send(res)
